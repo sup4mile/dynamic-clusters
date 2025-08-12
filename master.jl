@@ -2,6 +2,9 @@
 # Indices updated, not tested
 
 using Random, Distributions, Optim, NLsolve, SpecialFunctions
+
+# Exogenous parameters:
+
 N = 2 # Number of countries
 periods = 5
 J = 3 # Number of goods (needs to be big number and an integer type)
@@ -11,23 +14,28 @@ v = 1.0 # migration elasticity
 β = .99 # discount factor
 α = ones(J) * (1/J) # final good expenditure share
 
-τ = ones(N, N, J) # Iceberg trade costs 
-Lt = ones(N, J, periods) # Size of labor force in each country at time 
+τ = ones(N, N, J) # iceberg trade costs
 
-Ldot = ones(N, J, periods)
+# Initial conditions (state variables):
 
-At0 = ones(N, J)#initial productivities
+# Labor force (endogenous):
+Lt = ones(N, J, periods) # size of labor force in each country at time 
+Ldot = ones(N, J, periods) # growth rate of labor force in each country between 'periods-1' and 'periods'
 
+# Productivities (exogenous):
+At0 = ones(N, J) # initial productivities
+Adot = ones(N, J, periods)
+# Trade costs (exogenous):
+kdot = ones(N, N, J, periods)
 
+# Initial guesses for control variables:
+
+# Wages:
 wt = ones(N, J, periods)
 wt0 = ones(N, J)
-
 wdot = ones(N, J, periods)
+# Trade shares:
 tradesharest0 = ones(N, N, J) * (1 / N)
-Adot = ones(N, J, periods)
-
-
-kdot = ones(N, N, J, periods)
 
 pdotArray = ones(N, J, periods)
 d1wdot = ones(N, J)
