@@ -12,14 +12,14 @@ J = 3 # Number of goods (needs to be big number and an integer type)
 
 v = 1.0 # migration elasticity
 β = .99 # discount factor
-α = ones(J) * (1/J) # final good expenditure share
+α = ones(J) * (1/J) # final good expenditure share (currently set to equal shares)
 
-τ = ones(N, N, J) # iceberg trade costs
+κ = ones(N, N, J) # iceberg trade costs (currently set to 1, i.e., no trade costs)
 
 # Initial conditions (state variables):
 
 # Labor force (endogenous):
-Lt = ones(N, J, periods) # size of labor force in each country at time 
+Lt = ones(N, J, periods) # size of labor force in each country at time
 Ldot = ones(N, J, periods) # growth rate of labor force in each country between 'periods-1' and 'periods'
 
 # Productivities (exogenous):
@@ -35,7 +35,7 @@ wt = ones(N, J, periods)
 wt0 = ones(N, J)
 wdot = ones(N, J, periods)
 # Trade shares:
-tradesharest0 = ones(N, N, J) * (1 / N)
+tradesharest0 = ones(N, N, J) * (1 / N) # symmetric for the time being
 
 pdotArray = ones(N, J, periods)
 d1wdot = ones(N, J)
@@ -54,8 +54,8 @@ function pdot(n, j, d1wdot, kdot, Adot, time, tradesharest0) #pdot(nj) from equa
     (sum(tradesharest0[n, i, j] * (d1wdot[i, j] * kdot[n, i, j, time])^-θ[j] * Adot[i, j, time]^θ[j] for i in 1:N))^(-1 / θ[j])
 end 
 
-function tradeSharest0(n, i, j, wt0, At0, τ) #trade shares to nj from ij, equation (7)
-    wt0[i, j] * τ[n, i, j]^-θ[j] * At0[i, j] ^θ[j] / (sum((wt0[m, j] *τ[n, m, j])^-θ[j] * At0[m, j]^θ[j] for m in 1:N)) 
+function tradeSharest0(n, i, j, wt0, At0, κ) #trade shares to nj from ij, equation (7)
+    (wt0[i, j] * κ[n, i, j])^-θ[j] * At0[i, j] ^θ[j] / (sum((wt0[m, j] *κ[n, m, j])^-θ[j] * At0[m, j]^θ[j] for m in 1:N)) 
 end
 
 function tradeSharest1(n, i, j, d1wdot, Ldot, Adot, kdot, time, tradesharest0) #trade shares to nj from ij, equation (13)
@@ -110,7 +110,7 @@ while errormax > .01
     function g!(G, wt0)
         for n in 1:N
             for j in 1:J
-                G[n, j] = incomet0(n, j, wt0, Lt) - sum(Xt0(i, j, α, wt0, Lt) * tradeSharest0(n, i, j, wt0, At0, τ) for i in 1:N) #market clearing for wt0
+                G[n, j] = incomet0(n, j, wt0, Lt) - sum(Xt0(i, j, α, wt0, Lt) * tradeSharest0(n, i, j, wt0, At0, κ) for i in 1:N) #market clearing for wt0
             end
         end
     end
@@ -127,7 +127,7 @@ while errormax > .01
     for n in 1:N
         for i in 1:N
             for j in 1:J
-                tradesharest0[n, i , j] = tradeSharest0(n, i, j, wt0, At0, τ)
+                tradesharest0[n, i , j] = tradeSharest0(n, i, j, wt0, At0, κ)
             end
         end
     end
