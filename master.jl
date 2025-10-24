@@ -12,17 +12,15 @@ v = 1.0 # migration elasticity
 α = ones(J) * (1/J) # final good expenditure share
 
 τ = ones(N, N, J) # Iceberg trade costs 
-Lt = ones(N, J, periods) # Size of labor force in each country at time 
-Lt[1,1,1] = 1.1
 
-Ldot = ones(N, J, periods)
+L_t = ones(N, J, periods) # Size of labor force in each country at time 
+L_t[1,1,1] = 1.1
+Ldot_t = ones(N, J, periods)
 
-At0 = ones(N, J)#initial productivities
+w_t = ones(N, J, periods)
+ww = ones(N, J)
+wdot_t = ones(N, J, periods)
 
-wt = ones(N, J, periods)
-wt0 = ones(N, J)
-
-wdot = ones(N, J, periods)
 tradesharest0 = ones(N, N, J) * (1 / N)
 Adot = ones(N, J, periods)
 Adot[1,1,:] .= 1.5
@@ -45,28 +43,28 @@ function pdot(n, j, d1wdot, kdot, Adot, time, tradesharest0) #pdot(nj) from equa
     (sum(tradesharest0[n, i, j] * (d1wdot[i, j] * kdot[n, i, j, time])^-θ[j] * Adot[i, j, time]^θ[j] for i in 1:N))^(-1 / θ[j])
 end 
 
-function tradeSharest0(n, i, j, wt0, At0, τ) #trade shares to nj from ij, equation (7)
-    (wt0[i, j] * τ[n, i, j])^(-θ[j]) * At0[i, j] ^θ[j] / (sum((wt0[m, j] *τ[n, m, j])^(-θ[j]) * At0[m, j]^θ[j] for m in 1:N)) 
+function tradeSharest0(n, i, j, ww, At0, τ) #trade shares to nj from ij, equation (7)
+    (ww[i, j] * τ[n, i, j])^(-θ[j]) * At0[i, j] ^θ[j] / (sum((ww[m, j] *τ[n, m, j])^(-θ[j]) * At0[m, j]^θ[j] for m in 1:N)) 
 end
 
-function tradeSharest1(n, i, j, d1wdot, Ldot, Adot, kdot, time, tradesharest0) #trade shares to nj from ij, equation (13)
+function tradeSharest1(n, i, j, d1wdot, Ldot_t, Adot, kdot, time, tradesharest0) #trade shares to nj from ij, equation (13)
     tradesharest0[n, i, j] * ((d1wdot[i, j] * kdot[n, i, j, time]) / pdot(n, j, d1wdot, kdot, Adot, time, tradesharest0))^-θ[j] * Adot[i, j, time]^θ[j]
 end
 
-function incomet0(n, j, wt0, Lt) # total income of country n, sector j in time t=0 given wage and labor  
-    wt0[n, j] * Lt[n, j, 1] 
+function incomet0(n, j, ww, L_t) # total income of country n, sector j in time t=0 given wage and labor  
+    ww[n, j] * L_t[n, j, 1] 
 end
 
-function incomet1(n, j, d1wdot, time, Lt, wt) # total income of country n, sector j in time t+1
-    wt[n, j, time]*(d1wdot[n, j])*Lt[n, j, time]*(Ldot[n, j, time])
+function incomet1(n, j, d1wdot, time, L_t, w_t) # total income of country n, sector j in time t+1
+    w_t[n, j, time]*(d1wdot[n, j])*L_t[n, j, time]*(Ldot_t[n, j, time])
 end
 
-function Xt0(n, j, α, wt0, Lt) # expenditure on sector good j in region n, from equation (8)
-    α[j] * sum(wt0[n, k] * Lt[n, k, 1] for k in 1:J) 
+function Xt0(n, j, α, ww, L_t) # expenditure on sector good j in region n, from equation (8)
+    α[j] * sum(ww[n, k] * L_t[n, k, 1] for k in 1:J) 
 end
 
-function Xt1(n, j, α, d1wdot, Lt, wt, Ldot, time) # expenditure on sector good j in region n, from equation (14)
-    α[j] * sum(d1wdot[n, k] * Ldot[n, k, time] * wt[n, k, time] * Lt[n, k, time] for k in 1:J) #from equation (14) 
+function Xt1(n, j, α, d1wdot, L_t, w_t, Ldot_t, time) # expenditure on sector good j in region n, from equation (14)
+    α[j] * sum(d1wdot[n, k] * Ldot_t[n, k, time] * w_t[n, k, time] * L_t[n, k, time] for k in 1:J) #from equation (14) 
 end
 
 
@@ -88,53 +86,53 @@ while errormax > .00001
             end
         end
 
-        # Update Lt step 3 of appendix D
+        # Update L_t: step 3 in appendix D
         for n in 1:N
             for j in 1:J
-                Lt[n, j, time+1] = sum(μt[i, n, k, j, time] * Lt[i, k, time] for i in 1:N, k in 1:J)
+                L_t[n, j, time+1] = sum(μt[i, n, k, j, time] * L_t[i, k, time] for i in 1:N, k in 1:J)
             end
         end
-        # Update Ldots from Lts
-        Ldot[:, :, time] .= Lt[:, :, time+1] ./ Lt[:, :, time]
+        # Update Ldot_t from L_t:
+        Ldot_t[:, :, time] .= L_t[:, :, time+1] ./ L_t[:, :, time]
     end
 
-    function g!(G, wt0)
+    function g!(G, ww)
         # Unpack the first N*J entries into a matrix:
-        wt0 = reshape(wt0[1:N*J], N, J)
+        ww = reshape(ww[1:N*J], N, J)
         # Fill your first N*J equations (market clearing)
         idx = 1
         for n in 1:N, j in 1:J
-            G[idx] = incomet0(n, j, wt0, Lt) - sum(Xt0(i, j, α, wt0, Lt) * tradeSharest0(n, i, j, wt0, At0, τ) for i in 1:N)
+            G[idx] = incomet0(n, j, ww, L_t) - sum(Xt0(i, j, α, ww, L_t) * tradeSharest0(n, i, j, ww, At0, τ) for i in 1:N)
             idx += 1
         end
         # The last equation pins d1[1,1] to 1.0
-        G[N*J + 1] = wt0[1,1] - 1.0
+        G[N*J + 1] = ww[1,1] - 1.0
     end
     
     initial = [1.0, 2.11, 1.2, 1.15, 5.22, 1.21, 1.01]    # size: 2×3 if N=2, J=3
     results = nlsolve(g!, initial) #solve for wages
     
     # extract the wage solution as an N×J matrix
-    wt0 = reshape(results.zero[1:N*J], N, J)
+    ww = reshape(results.zero[1:N*J], N, J)
     
-    wt[:,:, 1] .= wt0[:,:]
+    w_t[:,:, 1] .= ww[:,:]
 
     for n in 1:N
         for i in 1:N
             for j in 1:J
-                tradesharest0[n, i , j] = tradeSharest0(n, i, j, wt0, At0, τ)
+                tradesharest0[n, i , j] = tradeSharest0(n, i, j, ww, At0, τ)
             end
         end
     end
 
-    println(wt0)  #end solving for wt0
+    println(ww)  #end solving for 'ww'
 
     for time in 1:periods-1
         function f!(F, d1wdot)
             for n in 1:N
                 for j in 1:J
-                    F[n,j] = (incomet1(n, j, d1wdot, time, Lt, wt) - sum(tradeSharest1(n, i, j, d1wdot, Ldot, Adot, kdot, time, tradesharest0)
-                    * Xt1(i, j, α, d1wdot, Lt, wt, Ldot, time) for i in 1:N)) # equation (15)
+                    F[n,j] = (incomet1(n, j, d1wdot, time, L_t, w_t) - sum(tradeSharest1(n, i, j, d1wdot, Ldot_t, Adot, kdot, time, tradesharest0)
+                    * Xt1(i, j, α, d1wdot, L_t, w_t, Ldot_t, time) for i in 1:N)) # equation (15)
                 end
             end
         end
@@ -146,11 +144,11 @@ while errormax > .00001
         res_f = nlsolve(f!, initial)
         #println("Random guesses:", initial_rand)
 
-        wdot[:, :, time] .= res_f.zero[:,:] # updates wdot with solution to the system of equations
-        d1wdot[:,:] .= wdot[:,:,time] 
+        wdot_t[:, :, time] .= res_f.zero[:,:] # updates wdot with solution to the system of equations
+        d1wdot[:,:] .= wdot_t[:,:,time] 
 
         for n in 1:N, j in 1:J
-            println(wdot[n, j, time])
+            println(wdot_t[n, j, time])
         end
 
         println("checkpoint")
@@ -159,15 +157,15 @@ while errormax > .00001
             pdotArray[n,j,time] = pdot(n, j, d1wdot, kdot, Adot,time, tradesharest0)
         end
     
-        tradesharest0[:,:,:] .= [tradeSharest1(n,i,j,d1wdot,Ldot,Adot,kdot,time,tradesharest0) for n in 1:N, i in 1:N, j in 1:J]
+        tradesharest0[:,:,:] .= [tradeSharest1(n,i,j,d1wdot,Ldot_t,Adot,kdot,time,tradesharest0) for n in 1:N, i in 1:N, j in 1:J]
 
-        wt[:, :, time + 1] .= wdot[:, :, time] .* wt[:, :, time]
+        w_t[:, :, time + 1] .= wdot_t[:, :, time] .* w_t[:, :, time]
 
     end
     println("udotPathGuess = ", udotPathGuess)
     for time in 1:periods-1
         for n in 1:N, j in 1:J
-            udotPathUpdate[n,j,time] = wdot[n,j,time]*(sum(μt[n,i,j,k,time]*(udotPathGuess[i,k,time+1])^(β/v) for i in 1:N, k in 1:J))^(v) ##needs verification but is equation 17 as specified by step 5
+            udotPathUpdate[n,j,time] = wdot_t[n,j,time]*(sum(μt[n,i,j,k,time]*(udotPathGuess[i,k,time+1])^(β/v) for i in 1:N, k in 1:J))^(v) ##needs verification but is equation 17 as specified by step 5
         end## Note: trying to figure out how to make sure the time+1 does not end the program with infs or NaN in the error
     end
     println("udotPathUpdate = ", udotPathUpdate)
