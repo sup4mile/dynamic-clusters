@@ -1,2 +1,4 @@
 # dynamic-clusters
-Spatial economy with trade and migration
+This file documents key steps, data sources, references, and other materials for the dynamic spatial model with local production externalities and costly migration.
+
+TO BE COMPLETED!
