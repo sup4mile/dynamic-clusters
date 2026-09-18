@@ -1,3 +1,11 @@
+# 9/18/2025
+Andrew and Jonathan meet to discuss Andrew's progress on the paper and resolve any questions Andrew has.
+
+#### To-do list for next meeting on Wednesday, September 23
+- Andrew sits with the dynamic hat algebra for a bit longer, and begins to rewrite the model/equilibrium conditions with our simplifications (no structures, no input-output linkages)
+- Jonathan looks over the Julia code to check for accuracy.
+
+
 # 9/11/2026
 
 ## Team
