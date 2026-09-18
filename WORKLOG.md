@@ -1,4 +1,5 @@
 # 9/18/2025
+## Andrew and Jonathan
 Andrew and Jonathan meet to discuss Andrew's progress on the paper and resolve any questions Andrew has.
 
 #### To-do list for next meeting on Wednesday, September 23
