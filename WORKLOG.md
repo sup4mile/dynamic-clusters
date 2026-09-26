@@ -1,3 +1,23 @@
+# 9/25/2026
+
+## Jonathan
+- Uploaded the simplified CDP model Julia files to /cdp-simple on the github. Scripts 01-03 are the ancestor scripts to 04, which implements the dynamic hat algebra into the simplified CDP model.
+- Script 05 has been created and it contains the machinery from script 04 and applies it to a set of counterfactual exercises.
+- Documentation for script 04,05 has been updated. 
+
+# 9/23/2026
+
+## Team
+Second meeting of the fall semester with Jonathan and Andrew.
+
+#### To-do list for next meeting on Wednesday, September 23
+- Simeon writes lecture note 5, which combines the migration note with input-output linkages. This note isn't particularly pressing, but is useful in the context of the Caliendo et al. (2019) paper.
+- Andrew hangs tight for now. Rereads the Caliendo et al. (2019) paper
+- Jonathan cleans up the Julia code:
+    + Moves simulated shock/parameter counterfactual scenarios from script 04 to its own sandbox script. 
+    + Cleans up the documentation/comments on the relevant codes
+
+
 # 9/18/2025
 ## Andrew and Jonathan
 Andrew and Jonathan meet to discuss Andrew's progress on the paper and resolve any questions Andrew has.
