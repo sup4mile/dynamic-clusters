@@ -10,6 +10,9 @@
 ## Team
 Second meeting of the fall semester with Jonathan and Andrew.
 
+### Looking forward
+- Starting next week, the focus will be on calibrating data to fit the spatial model. Focus will be on shaping the data to the commuting-zone level and imputing values for censored/manipulated data. 
+
 #### To-do list for next meeting on Wednesday, September 23
 - Simeon writes lecture note 5, which combines the migration note with input-output linkages. This note isn't particularly pressing, but is useful in the context of the Caliendo et al. (2019) paper.
 - Andrew hangs tight for now. Rereads the Caliendo et al. (2019) paper
