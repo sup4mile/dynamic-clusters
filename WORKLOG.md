@@ -17,9 +17,7 @@ where $`\omega \in [0,1]`$ denotes the intermediate variety and
 #### To-do list for next meeting on Wednesday, October 7
 - Simeon finishes lecture note on migration shares.
 - Andrew hangs tight for now. Can start playing around with the CDP simplified codes.
-- Jonathan gives a first pass
-    + Moves simulated shock/parameter counterfactual scenarios from script 04 to its own sandbox script. 
-    + Cleans up the documentation/comments on the relevant codes
+- Jonathan gives a first pass at adding the spillover term to the model
 
 
 # 9/25/2026
