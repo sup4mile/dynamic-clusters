@@ -1,3 +1,27 @@
+# 10/2/2026
+
+## Team
+Third meeting of the fall semester with Jonathan and Andrew. 
+
+Agglomeration spillover $`(\mathcal{L}^{nj}_t)^\psi`$: Augments the region-sector productivity $`A^{nj}_{t+1}`$ in the intermediate firm's production function
+
+```math
+y^{nj}_{t+1}(\omega) = A^{nj}_{t+1}(\omega) \cdot \ell^{nj}_{t+1}(\omega) \cdot \left(\mathcal{L}^{nj}_{t+1}\right)^\psi
+```
+
+where $`\omega \in [0,1]`$ denotes the intermediate variety and 
+```math
+\mathcal{L}^{nj}_{t+1} = \int_{\omega \in \Omega^{nj}_{t+1}} \ell^{nj}_{t+1}(\omega)\, d\omega.
+```
+
+#### To-do list for next meeting on Wednesday, September 23
+- Simeon finishes lecture note on migration shares.
+- Andrew hangs tight for now. Can start playing around with the CDP simplified codes.
+- Jonathan gives a first pass
+    + Moves simulated shock/parameter counterfactual scenarios from script 04 to its own sandbox script. 
+    + Cleans up the documentation/comments on the relevant codes
+
+
 # 9/25/2026
 
 ## Jonathan
