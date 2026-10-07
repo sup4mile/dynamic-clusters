@@ -1,3 +1,13 @@
+# 10/7/2026
+
+## Team
+Fourth meeting of the fall semester with Jonathan and Andrew. 
+
+#### To-do list for next meeting on Wednesday, October 14
+- Simeon finishes lecture note on migration shares.
+- Andrew hangs tight for now. 
+- Jonathan adds the spillover term to the model, and runs some exploratory simulations comparing transition paths, migration, and equilibrium for different values of $\psi$. Experiment with different types of productivity shocks (permanent vs temporary) for different $\psi$, and figure out a nice way to present the results visually.
+
 # 10/2/2026
 
 ## Team
