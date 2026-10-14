@@ -1,3 +1,13 @@
+# 10/14/2026
+
+## Team
+Fifth meeting of the fall semester with Jonathan and Andrew. 
+
+#### To-do list for next meeting on Friday, October 24
+- Andrew reads through the lecture notes, discusses with Jonathan if finishes before the next meeting. 
+- Jonathan experiments with different values of $\psi \in [0,0.25]$ and ways to visually display the results. A first attempt could be to create a heat map of "market concentration" at various levels of $\psi$ and report corresponding HHI values for region-sectors. 
+
+
 # 10/7/2026
 
 ## Team
