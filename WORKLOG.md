@@ -2,18 +2,18 @@
 ## Andrew & Jonathan
 - Download and consolidate CBP data into single data set
 - Collapse data to CZ level:
-    - County-to-CZ crosswalk files are available at https://ddorn.net/data.htm [section E]
     - harmonize industry classifications across years (from SIC to NAICS to make adding recent years easier): cross-walks going back in time are available at https://ddorn.net/data.htm [Section C] but we need the opposite direction
     - deal with synthetic noise, flags, and ranges in CBP:
         - method 1: Autor, Dorn, & Hansen: imputation is described in https://ddorn.net/papers/Autor-Dorn-Hanson-ChinaSyndrome-Appendix.pdf
         - method 2: Eckert, Fort, Schott, and Yang (available at https://www.fpeckert.me/efsy.pdf)
         - method 3: apply for restricted LBD data (which is used in paper by Bloom et al. available at https://drive.google.com/file/d/1BowvWl5lRuZXV-3JU5Qh_2qUlTbzhorP/view?usp=sharing)
+    - County-to-CZ crosswalk files are available at https://ddorn.net/data.htm [section E]
 - Jonathan:
     - increase number of sectors and location; keep track of run time
     - calculate HHI at local level (across sectors)
 - Andrew: play in the sandbox!
 ## Simeon
-
+Read the literature on empirical and quantitative approaches to identify the magnitude of local within-industry spillovers in the data.
 
 # 10/14/2026
 
