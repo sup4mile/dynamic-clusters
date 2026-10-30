@@ -1,3 +1,16 @@
+# 10/30/2026
+## Andrew & Jonathan Meeting
+Before Monday: 
+- Jonathan:
+    - Download and consolidate CBP data into single data set
+    - harmonize industry classifications across years (from SIC to NAICS to make adding recent years easier) using https://www.fpeckert.me/cbp/
+    - deal with synthetic noise, flags, and ranges in CBP using method 2: Eckert, Fort, Schott, and Yang (available at https://www.fpeckert.me/efsy.pdf)
+- Andrew:
+    - harmonize industry classifications across years (from SIC to NAICS to make adding recent years easier) using https://ddorn.net/data.htm
+    - deal with synthetic noise, flags, and ranges in CBP using method 1: Autor, Dorn, & Hansen: imputation is described in https://ddorn.net/papers/Autor-Dorn-Hanson-ChinaSyndrome-Appendix.pdf     
+- Yet to do: County-to-CZ crosswalk files are available at https://ddorn.net/data.htm [section E]
+
+
 # 10/23/2026
 ## Andrew & Jonathan
 - Download and consolidate CBP data into single data set
