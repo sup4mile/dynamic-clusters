@@ -1,3 +1,15 @@
+# 10/31/2026
+## Jonathan 
+## Documentation for `CBP_imputation/CBP_data`
+
+Created a new local folder, `alder/cbp`, to store all data files and code for constructing the CBP datasets and imputations. Data source: [Census CBP datasets](https://www.census.gov/programs-surveys/cbp/data/datasets.html?text-list-cc4db501b6%3Atab=all#text-list-cc4db501b6).
+
+- Archived CBP datasets from before 1986 are available from the [National Archives](https://catalog.archives.gov/id/613576), in case we're interested.
+    - `cbp/cbp_census_pull_api.ipynb` pulls data files using the Census API.
+    - `cbp/cbp_census_pull_bulk.ipynb` pulls the CBP county zip files for each year from 1986–2023, hosted at `https://www2.census.gov/programs-surveys/cbp/datasets/<year>/cbp<yy>co.zip`. It doesn't require a Census API key. It creates `cbp/data_bulk`, which stores all the zip files.
+    - `cbp/cbp_create_dataset.ipynb` concatenates all the zip files in `cbp/data_bulk` into one dataset. It doesn't drop any rows or columns; it only consolidates the files. The output is `cbp/cbp_county_1986_2023.parquet`, at the county-industry-year level. The notebook's markdown cells cover duplicate rows, column availability, and county code `999`.
+    - Variable name guides: [ProximityOne CBP guide](https://proximityone.com/dataresources/guide/index.html?dr_pds_cbp.htm) and [Census CBP glossary](https://www.census.gov/programs-surveys/cbp/about/glossary.html).
+
 # 10/30/2026
 ## Andrew & Jonathan Meeting
 Before Monday: 
