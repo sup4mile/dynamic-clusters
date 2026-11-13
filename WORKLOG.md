@@ -1,5 +1,33 @@
+# 11/13/2026
+## Note on change in CBP data starting in 2017
+
+- Eckert et al. paper does imputation in CBP up to and including 2016.
+- Starting in 2017, cells with 3 or less establishments are dropped; can no longer distinguish between cells with no establishments and those with up to 3 establishments.
+
+## Andrew & Jonathan
+- Estimate loss of data using the 2016 CBP (plausibly, cells that existed in 2016 but are gone in 2017 are small and reported with noise or flags already; will have to think how to estimate the number of "missing" establishments and jobs)
+
+- Look at note about parallelizing elements of the code below. Start working on it.
+
+- Look at note about trade below. Start working on mapping HS codes to NAICS.
+
+- Look into NAICS changes in 2017 and 2022. SIC and NAICS concordances are listed at https://www.census.gov/naics/concordances/concordances.html but the files themselves are not available, it seems. Contact the Census to inquire about the concordances (email: naics@census.gov).
+
+
 # 11/2/2026
-To be completed!
+## Jonathan & Andrew
+
+- Explore ways to run elements of the Julia code on multiple processors; the code for the original Caliendo et al. paper was written in MATLAB and you may want to check if anything is parallelized there (looking for "parfor" commands is a good starting point).
+- Counties: information on changes in boundaries (redraw, merge, split) is available at https://www.census.gov/programs-surveys/geography/technical-documentation/county-changes.html; our project won't go further back in time than 1990 (at least for now) so you can ignore any changes in the 70s and 80s.
+- Imports:
+    - We will eventually use data on U.S. imports from China. These are classified using HS (Harmonized System) codes (up to 10 digits).
+    - Since the employment and establishment data in the County Business Patterns (CBP) are classified using industry codes (SIC or NAICS) we need to reclassify imports from HS to industry codes. There are at least two "crosswalks" (possibly more):
+    
+        1. Peter Schott (Yale) has a website with trade-related data (including concordances for HS codes over time and HS codes to industry codes): https://faculty.som.yale.edu/peterschott/international-trade-data/
+        1. USITC has webtool to translate HS (or "HTS") into industry codes ("SITC" and "NAIC") at https://dataweb.usitc.gov/classification/commodity-translation. The acronyms used by the USITC are slightly different, but they refer to HS, SIC, and NAICS, to the best of our knowledge. It may be worth confirming.
+## Simeon
+- Create accounts at SSCC for Jonathan and Andrew and provide access to designated project folder
+- Summarize the literature on identification and estimation of local within-industry spillovers. Sketch how we are going to implement the most salient approach using the data we have.
 
 # 10/31/2026
 ## Jonathan 
